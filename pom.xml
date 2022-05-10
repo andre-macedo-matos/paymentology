@@ -4,7 +4,7 @@
 	<groupId>org.paymentology</groupId>
 	<artifactId>paymentology</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<build>
 		<finalName>paymentology</finalName>
 	</build>

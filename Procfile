@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar -Dspring.profiles.active=prod target/paymentology.jar
