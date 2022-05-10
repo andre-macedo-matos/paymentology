@@ -4,9 +4,35 @@
 	<groupId>org.paymentology</groupId>
 	<artifactId>paymentology</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<build>
 		<finalName>paymentology</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.heroku</groupId>
+									<artifactId>webapp-runner</artifactId>
+									<version>${tomcat.version}</version>
+									<destFileName>webapp-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
 	</build>
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
@@ -14,6 +40,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.1.0.RELEASE</spring.version>
+		<tomcat.version>7.0.30</tomcat.version>
 	</properties>
 
 	<dependencies>
@@ -26,7 +53,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-servlet-api</artifactId>
-			<version>7.0.30</version>
+			<version>${tomcat.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
