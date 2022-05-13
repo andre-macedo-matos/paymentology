@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Unmateched Report</title>
+<title>Unmatched Report</title>
 </head>
 <body>
 
-<h2>Unmateched Report</h2>
+<h2>Unmatched Report</h2>
 <div style="display: inline-block;">
 	<table>
-	<h2>File 1</h2>
+		<caption>File 1</caption>
 		<tr>
 			<th>TransactionDate</th>
 			<th>TransactionAmount</th>
@@ -22,7 +22,7 @@
 			<th>WalletReference</th>
 		</tr>
 		<tbody>
-			<c:forEach items="${diff1}" var="transaction">
+			<c:forEach items="${report.unmatched1}" var="transaction">
 				<tr>
 					<td>${transaction.date}</td>
 					<td>${transaction.amount}</td>
@@ -39,7 +39,7 @@
 
 <div style="display: inline-block;">
 	<table>
-	<h2>File 2</h2>
+		<caption>File 2</caption>
 		<tr>
 			<th>TransactionDate</th>
 			<th>TransactionAmount</th>
@@ -50,7 +50,7 @@
 			<th>WalletReference</th>
 		</tr>
 		<tbody>
-			<c:forEach items="${diff2}" var="transaction">
+			<c:forEach items="${report.unmatched2}" var="transaction">
 				<tr>
 					<td>${transaction.date}</td>
 					<td>${transaction.amount}</td>
