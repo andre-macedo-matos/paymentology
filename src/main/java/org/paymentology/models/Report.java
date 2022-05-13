@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.paymentology.helpers.ReconcileWithUnmatchedId;
+import org.paymentology.interfaces.ReconcileStrategy;
 
 public class Report {
 
@@ -127,11 +129,13 @@ public class Report {
 	}
 	
 	private List<Transaction> reconcileRecords(List<Transaction> diff1, List<Transaction> diff2) {
+		ReconcileStrategy reconcileStrategy = new ReconcileWithUnmatchedId();
+		
 		return diff1.stream()
 				.flatMap(t1 -> {
 					return diff2.stream()
-						.filter(t2 -> t1.isPossibleOfReconciliation(t2))
-						.filter(t2 -> t1.isUnmatched(t2));
+						.filter(t2 -> reconcileStrategy.isPossibleOfReconciliation(t1, t2))
+						.filter(t2 -> reconcileStrategy.isUnmatched(t1, t2));
 				})
 				.collect(Collectors.toList());
 	}

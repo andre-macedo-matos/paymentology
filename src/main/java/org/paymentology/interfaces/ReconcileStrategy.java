@@ -4,9 +4,9 @@ import org.paymentology.models.Transaction;
 
 public interface ReconcileStrategy {
 	
-	boolean isPossibleOfReconciliation(Transaction other);
+	boolean isPossibleOfReconciliation(Transaction t1, Transaction t2);
 	
-	boolean isUnmatched(Transaction other);
+	boolean isUnmatched(Transaction t1, Transaction t2);
 
 
 }
