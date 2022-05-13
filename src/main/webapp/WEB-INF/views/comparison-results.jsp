@@ -8,24 +8,28 @@
 <title>Comparison Results</title>
 </head>
 <body>
-	<div style="display: inline-block;">
+	<div style="display: inline-block;" align = "left">
 		<h2>File 1</h2>
 		<p>Total Records: ${report.totalRecords1}</p>
 		<p>Matching Records: ${report.matchingRecords1}</p>
 		<p>Unmatched Records: ${report.totalUnmatched1}</p>
-		
+	</div>
+	
+	<div style="display: inline-block;" align = "right">
 		<h2>File 2</h2>
-		<p>Total Records: ${report.totalRecords2}</p>
+		<p >Total Records: ${report.totalRecords2}</p>
 		<p>Matching Records: ${report.matchingRecords2}</p>
 		<p>Unmatched Records: ${report.totalUnmatched2}</p>
 	</div>
 
-	<form:form method="post" action="${spring:mvcUrl('RC#unmatchedReport').build()}">
-	 	
-		<div>
-			<input type="submit" value="Unmatched Report">
-		</div>
-	</form:form>
+	<div>
+		<form:form method="post" action="${spring:mvcUrl('RC#unmatchedReport').build()}">
+
+			<div>
+				<input type="submit" value="Unmatched Report">
+			</div>
+		</form:form>
+	</div>
 
 </body>
 </html>
