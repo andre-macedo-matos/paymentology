@@ -62,15 +62,10 @@ public class Report {
 		return diff1.stream()
 				.flatMap(t1 -> {
 					return diff2.stream()
-						.filter(t2 -> t1.getId().equals(t2.getId())
-										&& t1.getWalletReference().equals(t2.getWalletReference())
-										&& t1.getType().equals(t2.getType()))
-						.filter(t2 -> t1.getProfileName().equals(t2.getProfileName())
-										||!t1.getDate().equals(t2.getDate())
-										||!t1.getAmount().equals(t2.getAmount())
-										||!t1.getNarrative().equals(t2.getNarrative())
-										||!t1.getDescription().equals(t2.getDescription()));
+						.filter(t2 -> t1.isPossibleOfReconciliation(t2))
+						.filter(t2 -> t1.isUnmatched(t2));
 				})
 				.collect(Collectors.toList());
 	}
+
 }

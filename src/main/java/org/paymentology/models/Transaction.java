@@ -2,9 +2,11 @@ package org.paymentology.models;
 
 import java.util.Objects;
 
+import org.paymentology.interfaces.ReconcileStrategy;
+
 import com.opencsv.bean.CsvBindByPosition;
 
-public class Transaction {
+public class Transaction implements ReconcileStrategy {
 
 	@CsvBindByPosition(position = 0)
 	private String profileName;
@@ -119,6 +121,22 @@ public class Transaction {
 		return "Transaction [profileName=" + profileName + ", date=" + date + ", amount=" + amount + ", narrative="
 				+ narrative + ", description=" + description + ", id=" + id + ", type=" + type + ", walletReference="
 				+ walletReference + "]";
+	}
+	
+	@Override
+	public boolean isUnmatched(Transaction other) {
+		return this.getId().equals(other.getId())
+				&& this.getWalletReference().equals(other.getWalletReference())
+				&& this.getType().equals(other.getType());
+	}
+
+	@Override
+	public boolean isPossibleOfReconciliation(Transaction other) {
+		return !this.getProfileName().equals(other.getProfileName())
+				||!this.getDate().equals(other.getDate())
+				||!this.getAmount().equals(other.getAmount())
+				||!this.getNarrative().equals(other.getNarrative())
+				||!this.getDescription().equals(other.getDescription());
 	}
 
 }
