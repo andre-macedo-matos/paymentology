@@ -13,7 +13,7 @@
 <body>
 	<form:form method="post"
 	 	action="${spring:mvcUrl('RC#transactionCompare').build()}"
-	 	commandName="input"
+	 	commandName="inputs"
 		enctype="multipart/form-data">
 
 		<div>
