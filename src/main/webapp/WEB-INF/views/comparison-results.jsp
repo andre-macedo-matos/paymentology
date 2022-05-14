@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +10,14 @@
 <title>Comparison Results</title>
 </head>
 <body>
-	<div style="display: inline-block;" align = "left">
-		<h2>File 1</h2>
-		<p>Total Records: ${report.totalRecords1}</p>
-		<p>Matching Records: ${report.matchingRecords1}</p>
-		<p>Unmatched Records: ${report.totalUnmatched1}</p>
-	</div>
-	
-	<div style="display: inline-block;" align = "right">
-		<h2>File 2</h2>
-		<p >Total Records: ${report.totalRecords2}</p>
-		<p>Matching Records: ${report.matchingRecords2}</p>
-		<p>Unmatched Records: ${report.totalUnmatched2}</p>
-	</div>
+	<c:forEach items="${report.filesValues}" var="entry">
+		<div style="display: inline-block;" align = "left">
+			<p><b>${entry.key}</b></p>
+			<p>Total Records: ${entry.value.totalRecords}</p>
+			<p>Matching Records: ${entry.value.totalMatches}</p>
+			<p>Unmatched Records: ${entry.value.totalUnmatches}</p>
+		</div>
+	</c:forEach>
 
 	<div>
 		<form:form method="post" action="${spring:mvcUrl('RC#unmatchedReport').build()}">
