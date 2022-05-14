@@ -10,6 +10,7 @@
 <title>Comparison Results</title>
 </head>
 <body>
+	<h2>Comparison Results</h2>
 	<c:forEach items="${report.filesValues}" var="entry">
 		<div style="display: inline-block;" align = "left">
 			<p><b>${entry.key}</b></p>

@@ -45,7 +45,7 @@ tr:nth-child(even) {
 	<div class="row">
 		<c:forEach items="${report.filesValues}" var="entry">
 			<div class="column">
-				<font size="2">
+				<font size="1">
 				<table>
 					<caption>${entry.key}</caption>
 					<tr>

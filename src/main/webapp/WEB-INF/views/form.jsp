@@ -11,6 +11,7 @@
 <title>Compare Transaction</title>
 </head>
 <body>
+	<h2>Specify files to Compare</h2>
 	<form:form method="post"
 	 	action="${spring:mvcUrl('RC#transactionCompare').build()}"
 	 	commandName="inputs"
