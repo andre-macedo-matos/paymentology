@@ -18,6 +18,8 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class Report {
 
 	private Map<String, FileValues> filesValues = new HashMap<String, FileValues>();
+	
+	public Report() {}
 
 	public Report(Inputs inputs) {
 		List<Transaction> fileTransactions1 = getFileTransactions(inputs.getFile1());
@@ -26,8 +28,10 @@ public class Report {
 		List<Transaction> outerTransaction1 = subtract(fileTransactions1, fileTransactions2);
 		List<Transaction> outerTransaction2 = subtract(fileTransactions2, fileTransactions1);
 		
-		List<Transaction> unmatchedRecords1 = reconcileRecords(outerTransaction1, outerTransaction2);
-		List<Transaction> unmatchedRecords2 = reconcileRecords(outerTransaction2, outerTransaction1);
+		List<Transaction> unmatchedRecords1 = reconcileRecords(outerTransaction1, outerTransaction2, 
+				new ReconcileWithUnmatchedId());
+		List<Transaction> unmatchedRecords2 = reconcileRecords(outerTransaction2, outerTransaction1, 
+				new ReconcileWithUnmatchedId());
 		
 		FileValues fileValues1 = new FileValues(inputs.getFile1().getOriginalFilename(), 
 												fileTransactions1.size(), 
@@ -69,26 +73,29 @@ public class Report {
 			return transactions;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Transaction> subtract(List<Transaction> file1, List<Transaction> file2) {
+	public List<Transaction> subtract(List<Transaction> file1, List<Transaction> file2) {
 		return (List<Transaction>) CollectionUtils.subtract(file1, file2)
 												  .stream()
 												  .collect(Collectors.toList());
 	}
 
-	private List<Transaction> reconcileRecords(List<Transaction> diff1, List<Transaction> diff2) {
-		ReconcileStrategy reconcileStrategy = new ReconcileWithUnmatchedId();
+	public List<Transaction> reconcileRecords(List<Transaction> diff1, List<Transaction> diff2, 
+			ReconcileStrategy reconcileStrategy) {
 
-		return diff1.stream()
-				    .flatMap(t1 -> {
-				    	return diff2.stream()
-				    				.filter(t2 -> reconcileStrategy.isPossibleOfReconciliation(t1, t2))
-				    				.filter(t2 -> reconcileStrategy.isUnmatched(t1, t2));
+		return diff2.stream()
+				    .flatMap(t2 -> {
+				    	return diff1.stream()
+				    				.filter(t1 -> reconcileStrategy.isPossibleOfReconciliation(t1, t2))
+				    				.filter(t1 -> reconcileStrategy.isUnmatched(t1, t2));
 				    })
 				    .collect(Collectors.toList());
 	}
