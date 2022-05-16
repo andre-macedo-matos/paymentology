@@ -4,19 +4,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="customTags" tagdir="/WEB-INF/tags"%>
 
-<customTags:pageTemplate bodyClass="body"
-	title="Specify files to Compare">
+<customTags:pageTemplate bodyClass="body" title="Specify files to Compare">
 	<jsp:body>
-		<h2 class="display-3">Specify files to Compare</h2>
+		<h4 class="display-4">Specify files to compare</h4>
 		
 		<form:form method="post"
 			action="${spring:mvcUrl('RC#transactionCompare').build()}"
-			commandName="inputs" 
-			enctype="multipart/form-data">
+			commandName="inputs" enctype="multipart/form-data">
 	
 			<div class="container">
 				<div class="input-group input-group mb-3 col">
-					<span class="input-group-text" id="inputGroup-sizing-sm" for="file1">File 1</span> 
+					<span class="input-group-text" id="inputGroup-sizing-sm"
+						for="file1">File 1</span> 
 					<input class="form-control" id="formFile" type="file" name="file1" />
 				</div>
 				<div class="row">
@@ -24,7 +23,8 @@
 				</div>
 			
 				<div class="input-group input-group mb-3 col">
-					<span class="input-group-text" id="inputGroup-sizing-sm" for="file2">File 2</span> 
+					<span class="input-group-text" id="inputGroup-sizing-sm"
+						for="file2">File 2</span> 
 					<input class="form-control" id="formFile" type="file" name="file2" />
 				</div>
 				<div class="row">

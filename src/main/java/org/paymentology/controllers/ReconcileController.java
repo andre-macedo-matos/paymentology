@@ -30,16 +30,19 @@ public class ReconcileController {
 
 		this.report = new Report(inputs);
 
-		ModelAndView modelAndView = new ModelAndView("comparison-results");
+		ModelAndView modelAndView = new ModelAndView("form");
 		modelAndView.addObject("report", report);
+		modelAndView.addObject("showCompare", "display:visible;");
+		modelAndView.addObject("showTable", "display:none;");
 
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "unmatchedReport", method = RequestMethod.POST)
 	public ModelAndView unmatchedReport() {
-		ModelAndView modelAndView = new ModelAndView("unmatched-report");
+		ModelAndView modelAndView = new ModelAndView("form");
 		modelAndView.addObject("report", this.report);
+		modelAndView.addObject("showTable", "display:visible;");
 
 		return modelAndView;
 	}
@@ -47,6 +50,8 @@ public class ReconcileController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView form(Inputs inputs) {
 		ModelAndView modelAndView = new ModelAndView("form");
+		modelAndView.addObject("showCompare", "display:none;");
+		modelAndView.addObject("showTable", "display:none;");
 		return modelAndView;
 	}
 

@@ -20,6 +20,14 @@
 	
 	<jsp:doBody/>
 	
+	<div style="${showCompare}">
+		<%@include file="/WEB-INF/views/comparison-results.jsp" %>
+	</div>
+	
+	<div style="${showTable}">
+		<%@include file="/WEB-INF/views/unmatched-report.jsp" %>
+	</div>
+	
 	<jsp:invoke fragment="scripts"/>
 </body>
 </html>

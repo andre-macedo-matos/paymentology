@@ -1,43 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="customTags" tagdir="/WEB-INF/tags"%>
 
-<customTags:pageTemplate bodyClass="body" title="Comparison Results">
-	<jsp:body>
-		<h2 class="display-3">Comparison Results</h2>
-		<div class="container">
-			<div class="row">
-				<c:forEach items="${report.filesValues}" var="entry">
-					<div class="col">
-						<div class="card">
-							<h5 class="card-header">${entry.key}</h5>
-				  			<div class="card-body">
-								<dl class="row">
-						  			<dt class="col-sm-6">Total Records: </dt>
-						 			<dd class="col-sm-6">${entry.value.totalRecords}</dd>
-						  			<dt class="col-sm-6">Matching Records: </dt>
-						 			<dd class="col-sm-6">${entry.value.totalMatches}</dd>
-						  			<dt class="col-sm-6">Unmatched Records: </dt>
-						 			<dd class="col-sm-6">${entry.value.totalUnmatches}</dd>
-								</dl>
-				  			</div>
-						</div>
+<h2 class="display-3">Comparison Results</h2>
+<div class="container">
+	<div class="row">
+		<c:forEach items="${report.filesValues}" var="entry">
+			<div class="col">
+				<div class="card">
+					<h5 class="card-header">${entry.key}</h5>
+					<div class="card-body">
+						<dl class="row">
+							<dt class="col-sm-6">Total Records:</dt>
+							<dd class="col-sm-6">${entry.value.totalRecords}</dd>
+							<dt class="col-sm-6">Matching Records:</dt>
+							<dd class="col-sm-6">${entry.value.totalMatches}</dd>
+							<dt class="col-sm-6">Unmatched Records:</dt>
+							<dd class="col-sm-6">${entry.value.totalUnmatches}</dd>
+						</dl>
 					</div>
-				</c:forEach>
-			</div>
-		</div>
-	
-		<div>
-			<form:form method="post" action="${spring:mvcUrl('RC#unmatchedReport').build()}">
-	
-				<div class="input-group input-group mb-3">
-					<input class="btn btn-primary" type="submit" value="Unmatched Report">
 				</div>
-			</form:form>
-		</div>
+			</div>
+		</c:forEach>
+	</div>
+</div>
 
-	</jsp:body>
-</customTags:pageTemplate>
+<div>
+	<form:form method="post"
+		action="${spring:mvcUrl('RC#unmatchedReport').build()}">
+
+		<div class="input-group input-group mb-3">
+			<input class="btn btn-primary" type="submit" value="Unmatched Report">
+		</div>
+	</form:form>
+</div>
