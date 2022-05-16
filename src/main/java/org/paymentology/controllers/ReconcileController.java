@@ -18,11 +18,6 @@ public class ReconcileController {
 
 	private Report report;
 	
-	@InitBinder
-	protected void  initBinder(WebDataBinder binder) {
-		binder.setValidator(new InputsValidator());
-	}
-	
 	@RequestMapping(value = "transactionCompare", method = RequestMethod.POST)
 	public ModelAndView transactionCompare(@Valid Inputs inputs, BindingResult bindingResult) {
 		if(bindingResult.hasErrors())
