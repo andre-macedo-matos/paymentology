@@ -11,7 +11,8 @@
 		
 		<form:form method="post"
 			action="${spring:mvcUrl('RC#transactionCompare').build()}"
-			commandName="inputs" enctype="multipart/form-data">
+			commandName="inputs" 
+			enctype="multipart/form-data">
 	
 			<div class="container">
 				<div class="input-group input-group mb-3 col">
