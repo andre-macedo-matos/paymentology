@@ -5,38 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<style>
-* {
-	box-sizing: border-box;
-}
-
-.row {
-	display: flex;
-	margin-left: -5px;
-	margin-right: -5px;
-}
-
-.column {
-	flex: 50%;
-	padding: 5px;
-}
-
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-	border: 1px solid #ddd;
-}
-
-th, td {
-	text-align: center;
-	padding: 2px;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-</style>
+ <link href="./resources/css/styles.css" rel="stylesheet" type="text/css" />
 <title>Unmatched Report</title>
 </head>
 <body>
