@@ -5,15 +5,18 @@ import javax.validation.Valid;
 import org.paymentology.models.Inputs;
 import org.paymentology.models.Report;
 import org.paymentology.validators.InputsValidator;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class ReconcileController {
 
 	private Report report;
