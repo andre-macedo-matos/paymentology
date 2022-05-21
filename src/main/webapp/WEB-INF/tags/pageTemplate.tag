@@ -19,12 +19,12 @@
 <body class="${bodyClass}">
 	
 	<jsp:doBody/>
-	
-	<div style="${showCompare}">
+		
+	<div style="${empty showCompare ? 'display:none;' : '${showCompare}'}">
 		<%@include file="/WEB-INF/views/comparison-results.jsp" %>
 	</div>
 	
-	<div style="${showTable}">
+	<div style="${empty showTable ? 'display:none;' : '${showTable}'}">
 		<%@include file="/WEB-INF/views/unmatched-report.jsp" %>
 	</div>
 	
