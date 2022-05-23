@@ -25,12 +25,7 @@
 	</div>
 </div>
 
-<div>
-	<form:form method="post"
-		action="${spring:mvcUrl('RC#unmatchedReport').build()}">
-
-		<div class="input-group input-group mb-3">
-			<input class="btn btn-primary" type="submit" value="Unmatched Report">
-		</div>
-	</form:form>
+<div class="input-group input-group mb-3">
+	<button onclick="showTable()" class="btn btn-primary">Unmatched
+		Report</button>
 </div>

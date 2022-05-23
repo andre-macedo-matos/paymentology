@@ -4,7 +4,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="customTags" tagdir="/WEB-INF/tags"%>
 
+
 <customTags:pageTemplate bodyClass="body" title="Specify files to Compare">
+	<jsp:attribute name="scripts">
+		<script type="text/javascript">
+			function showTable() {
+				let report = document.getElementById("report");
+				report.style.visibility='visible';
+			}
+		</script>
+	</jsp:attribute>
+
 	<jsp:body>
 		<h4 class="display-4">Specify files to compare</h4>
 		
