@@ -2,9 +2,11 @@ package org.paymentology.models;
 
 import java.util.Objects;
 
+import org.paymentology.abstractions.Transaction;
+
 import com.opencsv.bean.CsvBindByPosition;
 
-public class Transaction {
+public class TransactionMarkoff extends Transaction {
 
 	@CsvBindByPosition(position = 0)
 	private String profileName;
@@ -107,7 +109,7 @@ public class Transaction {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Transaction other = (Transaction) obj;
+		TransactionMarkoff other = (TransactionMarkoff) obj;
 		return Objects.equals(amount, other.amount) && Objects.equals(date, other.date)
 				&& Objects.equals(description, other.description) && Objects.equals(id, other.id)
 				&& Objects.equals(narrative, other.narrative) && Objects.equals(profileName, other.profileName)
@@ -119,6 +121,26 @@ public class Transaction {
 		return "Transaction [profileName=" + profileName + ", date=" + date + ", amount=" + amount + ", narrative="
 				+ narrative + ", description=" + description + ", id=" + id + ", type=" + type + ", walletReference="
 				+ walletReference + "]";
+	}
+
+	@Override
+	public boolean isPossibleOfReconciliation(Transaction other) {
+		TransactionMarkoff m2 = (TransactionMarkoff) other;
+		
+		return this.getWalletReference().equals(m2.getWalletReference())
+				&& this.getType().equals(m2.getType());
+	}
+
+	@Override
+	public boolean isUnmatched(Transaction other) {
+		TransactionMarkoff m2 = (TransactionMarkoff) other;
+		
+		return !this.getProfileName().equals(m2.getProfileName())
+				||!this.getDate().equals(m2.getDate())
+				||!this.getAmount().equals(m2.getAmount())
+				||!this.getNarrative().equals(m2.getNarrative())
+				||!this.getDescription().equals(m2.getDescription())
+				||!this.getId().equals(m2.getId());
 	}
 
 }

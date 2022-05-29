@@ -1,12 +1,12 @@
 package org.paymentology.interfaces;
 
-import org.paymentology.models.Transaction;
+import org.paymentology.abstractions.Transaction;
 
 public interface ReconcileStrategy {
 	
-	boolean isPossibleOfReconciliation(Transaction t1, Transaction t2);
+	boolean isPossibleOfReconciliation(Transaction other);
 	
-	boolean isUnmatched(Transaction t1, Transaction t2);
+	boolean isUnmatched(Transaction other);
 
 
 }

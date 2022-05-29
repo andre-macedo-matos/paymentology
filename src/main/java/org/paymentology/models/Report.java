@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.paymentology.interfaces.ReconcileStrategy;
+import org.paymentology.abstractions.Transaction;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -19,15 +19,14 @@ public class Report {
 	public Report() {}
 
 	@SuppressWarnings("unchecked")
-	public Report(Inputs inputs, ReconcileStrategy reconcileStrategy) {		
+	public Report(Inputs inputs) {		
 		List<Transaction> fileTransactions1 = getFileTransactions(inputs.getFile1());
 		List<Transaction> fileTransactions2 = getFileTransactions(inputs.getFile2());
 		
 		SubtractionsOfLists outerTransactions = new SubtractionsOfLists(fileTransactions1, fileTransactions2);
 		
 		ReconcileRecords reconcileRecords = new ReconcileRecords((List<Transaction>) outerTransactions.getL1MinusL2(), 
-																 (List<Transaction>) outerTransactions.getL2MinusL1(), 
-																 reconcileStrategy);
+																 (List<Transaction>) outerTransactions.getL2MinusL1());
 		
 		FileValues fileValues1 = new FileValues(inputs.getFile1().getOriginalFilename(), 
 												fileTransactions1.size(), 
@@ -62,7 +61,7 @@ public class Report {
 			inputStreamReader = new InputStreamReader(file.getInputStream());
 			List<Transaction> transactions = new CsvToBeanBuilder<Transaction>(inputStreamReader)
 					.withSkipLines(1)
-					.withType(Transaction.class)
+					.withType(TransactionMarkoff.class)
 					.build()
 					.parse();
 			

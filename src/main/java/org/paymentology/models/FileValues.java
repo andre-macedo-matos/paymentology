@@ -2,6 +2,8 @@ package org.paymentology.models;
 
 import java.util.List;
 
+import org.paymentology.abstractions.Transaction;
+
 public class FileValues {
 
 	private String name;
