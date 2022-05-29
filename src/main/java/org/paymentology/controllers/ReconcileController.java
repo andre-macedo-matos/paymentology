@@ -2,6 +2,7 @@ package org.paymentology.controllers;
 
 import javax.validation.Valid;
 
+import org.paymentology.helpers.ReconcileWithUnmatchedId;
 import org.paymentology.models.Inputs;
 import org.paymentology.models.Report;
 import org.paymentology.validators.InputsValidator;
@@ -34,7 +35,7 @@ public class ReconcileController {
 		if (bindingResult.hasErrors())
 			return form(inputs);
 		
-		attributes.addFlashAttribute("report", new Report(inputs));
+		attributes.addFlashAttribute("report", new Report(inputs, new ReconcileWithUnmatchedId()));
 		attributes.addFlashAttribute("showCompare", "display:visible;");
 
 		return new ModelAndView("redirect:/");
@@ -49,7 +50,7 @@ public class ReconcileController {
 	@RequestMapping(value = "/json/report", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView jsonReport(@Valid Inputs inputs) {
 		ModelAndView modelAndView = new ModelAndView("report");
-		Report report = new Report(inputs);
+		Report report = new Report(inputs, new ReconcileWithUnmatchedId());
 		
 		String reportAsJson;
 		try {

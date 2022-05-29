@@ -6,10 +6,7 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.paymentology.helpers.ReconcileWithUnmatchedId;
 import org.paymentology.interfaces.ReconcileStrategy;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,31 +18,30 @@ public class Report {
 	
 	public Report() {}
 
-	public Report(Inputs inputs) {
+	@SuppressWarnings("unchecked")
+	public Report(Inputs inputs, ReconcileStrategy reconcileStrategy) {		
 		List<Transaction> fileTransactions1 = getFileTransactions(inputs.getFile1());
 		List<Transaction> fileTransactions2 = getFileTransactions(inputs.getFile2());
 		
-		List<Transaction> outerTransaction1 = subtract(fileTransactions1, fileTransactions2);
-		List<Transaction> outerTransaction2 = subtract(fileTransactions2, fileTransactions1);
+		SubtractionsOfLists outerTransactions = new SubtractionsOfLists(fileTransactions1, fileTransactions2);
 		
-		List<Transaction> unmatchedRecords1 = reconcileRecords(outerTransaction1, outerTransaction2, 
-				new ReconcileWithUnmatchedId());
-		List<Transaction> unmatchedRecords2 = reconcileRecords(outerTransaction2, outerTransaction1, 
-				new ReconcileWithUnmatchedId());
+		ReconcileRecords reconcileRecords = new ReconcileRecords((List<Transaction>) outerTransactions.getL1MinusL2(), 
+																 (List<Transaction>) outerTransactions.getL2MinusL1(), 
+																 reconcileStrategy);
 		
 		FileValues fileValues1 = new FileValues(inputs.getFile1().getOriginalFilename(), 
 												fileTransactions1.size(), 
-												fileTransactions1.size() - outerTransaction1.size(), 
-												unmatchedRecords1.size(), 
-												outerTransaction1,
-												unmatchedRecords1);
+												fileTransactions1.size() - outerTransactions.getL1MinusL2().size(), 
+												reconcileRecords.getL1WithL2().size(), 
+												(List<Transaction>) outerTransactions.getL1MinusL2(),
+												reconcileRecords.getL1WithL2());
 		
 		FileValues fileValues2 = new FileValues(inputs.getFile2().getOriginalFilename(), 
 												fileTransactions2.size(), 
-												fileTransactions2.size() - outerTransaction2.size(), 
-												unmatchedRecords2.size(), 
-												outerTransaction2,
-												unmatchedRecords2);
+												fileTransactions2.size() - outerTransactions.getL2MinusL1().size(), 
+												reconcileRecords.getL2WithL1().size(), 
+												(List<Transaction>) outerTransactions.getL2MinusL1(),
+												reconcileRecords.getL2WithL1());
 		
 		this.filesValues.put(fileValues1.getName(), fileValues1);
 		this.filesValues.put(fileValues2.getName(), fileValues2);
@@ -79,25 +75,6 @@ public class Report {
 		}
 		
 		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Transaction> subtract(List<Transaction> file1, List<Transaction> file2) {
-		return (List<Transaction>) CollectionUtils.subtract(file1, file2)
-												  .stream()
-												  .collect(Collectors.toList());
-	}
-
-	public List<Transaction> reconcileRecords(List<Transaction> diff1, List<Transaction> diff2, 
-			ReconcileStrategy reconcileStrategy) {
-
-		return diff2.stream()
-				    .flatMap(t2 -> {
-				    	return diff1.stream()
-				    				.filter(t1 -> reconcileStrategy.isPossibleOfReconciliation(t1, t2))
-				    				.filter(t1 -> reconcileStrategy.isUnmatched(t1, t2));
-				    })
-				    .collect(Collectors.toList());
 	}
 	
 }
