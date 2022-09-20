@@ -1,5 +1,4 @@
-# paymentology
-## Repository to project challenger of Paymentology
+# Repository to The project challenger from Paymentology
 
 **The Project**
 
